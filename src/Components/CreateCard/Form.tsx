@@ -27,10 +27,15 @@ const Form = () => {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+    if (file?.type !== "image/png" && file?.type !== "image/jpeg" && file?.type !== "image/jpg") {
+      toast.error("Please upload a valid image");
+      return;
+    }
     if (file) {
       setForm({ ...form, image: file });
       setImgPreview(URL.createObjectURL(file));
     }
+
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
