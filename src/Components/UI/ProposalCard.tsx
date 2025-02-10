@@ -25,10 +25,19 @@ const ProposalCard = ({ card }: { card: Models.Document }) => {
             />
           </div>
           <div>
-            <p className="text-xs font-sans font-medium text-sub">
+            {/* <p className="text-xs font-sans font-medium text-sub">
               From: {card.from}
-            </p>
+            </p> */}
             <p className=" font-sora font-medium text-main">To: {card.to}</p>
+            <span
+            className={`${
+              card?.status === "pending"
+                ? "bg-yellow-500/10 text-orange-500"
+                : "bg-green-500/10 text-green-500"
+            } text-xs capitalize font-sans font-medium rounded-full px-2 py-1`}
+          >
+            {card.status}
+          </span>
           </div>
         </div>
 
@@ -40,19 +49,11 @@ const ProposalCard = ({ card }: { card: Models.Document }) => {
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-2 ms-0 mt-auto">
+        <div className="flex items-center justify-end gap-2 ms-0 mt-auto">
           <p className="text-xs font-sans font-medium text-sub">
             {formatDate(card.$createdAt)}
           </p>
-          <p
-            className={`${
-              card?.status === "pending"
-                ? "bg-yellow-500/10 text-orange-500"
-                : "bg-green-500/10 text-green-500"
-            } text-xs capitalize font-sans font-medium rounded-full px-2 py-1`}
-          >
-            {card.status}
-          </p>
+         
         </div>
       </div>
     </>

@@ -1,21 +1,35 @@
 import { RootLayout } from "@/Layouts";
-import { Check, Copy, Share2, Trash2, X } from "lucide-react";
+import { Check, Copy, Link, Share2, Trash2, X } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useCards } from "@/Hooks";
 import { toast } from "sonner";
 import { useState } from "react";
-import { Modal } from "@/Components/UI";
+import { Input, Modal } from "@/Components/UI";
 import { AnimatePresence } from "framer-motion";
+
 const Preview = () => {
   const location = useLocation();
   const { card } = location.state;
   const { imgUrl } = useCards();
   const [isCopied, setIsCopied] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLinkModalOpen, setIsLinkModalOpen] = useState(false);
   const { deleteCard } = useCards();
+  const [secretWord, setSecretWord] = useState("");
+  const [isSecretWordVerified, setIsSecretWordVerified] = useState(false);
 
   const toggleModal = () => {
     setIsModalOpen((prev) => !prev);
+  };
+
+  const toggleLinkModal = () => {
+    setIsLinkModalOpen((prev) => !prev);
+  };
+
+  const handleSecretWordVerification = () => {
+    if (secretWord === card?.secret) {
+      setIsSecretWordVerified(true);
+    }
   };
 
   const handleShare = async () => {
@@ -81,9 +95,9 @@ const Preview = () => {
                 <br /> <span className="text-red-400">{card.to}</span>?
               </h1>
 
-              <span className="text-xs text-orange-500 px-4 py-1 font-sans bg-yellow-500/10 rounded-full font-normal">
+              {/* <span className="text-xs text-orange-500 px-4 py-1 font-sans bg-yellow-500/10 rounded-full font-normal">
                 From: <span className="font-medium font-sora">{card.from}</span>
-              </span>
+              </span> */}
             </div>
           </div>
 
@@ -112,11 +126,11 @@ const Preview = () => {
           </div>
           <div className="center">
             <button
-              onClick={handleCopy}
+              onClick={toggleLinkModal}
               className="bg-[#f9f9f9] cursor-pointer text-xs text-main center gap-2 font-sora px-4 h-9 rounded-full font-medium"
             >
-              <span>{isCopied ? "Copied" : "Copy Card Link"}</span>
-              {isCopied ? <Check size={14} /> : <Copy size={14} />}
+              <span>Get Card Link</span>
+              <Link size={14} />
             </button>
           </div>
         </div>
@@ -146,6 +160,58 @@ const Preview = () => {
                   <Trash2 size={16} />
                 </button>
               </div>
+            </div>
+          </Modal>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isLinkModalOpen && (
+          <Modal
+            title="Get Card Link"
+            isOpen={isLinkModalOpen}
+            onClose={toggleLinkModal}
+          >
+            <div className="space-y-4">
+              <p>To get the card link, you need to verify your secret word!</p>
+              {!isSecretWordVerified && (
+                <>
+                <Input
+                label="Secret Word"
+                id="secret-word"
+                type="text"
+                placeholder="Enter your secret word"
+                value={secretWord}
+                onChange={(e) => setSecretWord(e.target.value)}
+              />
+
+              <button
+                onClick={handleSecretWordVerification}
+                className="bg-primary text-sm text-black center gap-2 font-sora px-4 h-10 rounded-full font-medium"
+              >
+                <span>Verify</span>
+                <Check size={18} />
+              </button>
+              </>
+              )}
+
+
+              {isSecretWordVerified && (
+                <p className="text-main text-sm bg-[#f9f9f9] p-2 rounded-lg">
+                  Shareable Link: <span className="font-medium">{window.location.origin}/card/{card?.slug}</span>
+                </p>
+              )}
+
+              {isSecretWordVerified && (
+                <button
+                  onClick={handleCopy}
+                  className="bg-primary text-sm text-black center gap-2 font-sora px-4 h-10 rounded-full font-medium"
+                >
+                  {isCopied ? <span>Copied</span> : <span>Copy Link</span>}
+                  {isCopied ? <Check size={16} /> : <Copy size={16} />}
+                </button>
+
+              )}
             </div>
           </Modal>
         )}
