@@ -27,10 +27,15 @@ const Preview = () => {
   };
 
   const handleSecretWordVerification = () => {
+    if(!secretWord) {
+      toast.error("Please enter a secret word");
+      return;
+    }
     if (secretWord === card?.secret) {
       setIsSecretWordVerified(true);
     }
   };
+
 
   const handleShare = async () => {
     const message = `Hey, I'm sending you a Valentine's Day card! 💖\n\n${card?.rizz}\n\nCheck it out: ${window.location.origin}/card/${card?.slug}`;
