@@ -50,11 +50,12 @@ const Card = () => {
     });
   };
   const handleShare = () => {
-    const message = `Hey, I'm sending you a Valentine's Day card! 💖\n\n${card?.message}\n\nCheck it out: ${window.location.origin}/card/${card?.slug}`;
+    const message = `Hey Everyone, I now have a valentine! 💖\n\n${card?.from} is my valentine! 💖\n\nCheck it out: ${window.location.origin}/card/${card?.slug}`;
     const encodedMessage = encodeURIComponent(message);
     const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
     window.open(whatsappUrl, "_blank");
   };
+
 
   if (!card) {
     return (
