@@ -1,0 +1,20 @@
+
+const TextArea = ({ label, id, ...props }: TextAreaProps) => {
+  return (
+    <div className="space-y-2">
+    <label htmlFor={id} className="text-sm font-sans text-main">
+      {label}
+    </label>
+    <textarea
+      id={id}
+      name={id}
+      rows={3}
+      className="w-full text-sm border border-line focus:border-orange-500/50 focus:ring-4 focus:ring-primary rounded-md p-2 placeholder:text-sm placeholder:text-sub"
+      {...props}
+
+    />
+  </div>
+  )
+}
+
+export default TextArea

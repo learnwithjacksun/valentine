@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Sora:wght@100..800&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Instrument Sans", serif;
+  --font-sora: "Sora", serif;
+  --color-main: #444;
+  --color-sub: #777;
+  --color-primary: #fff19a;
+  --color-line: #e5e5e5;
+}
+
+*{
+  @apply outline-none 
+}
+.center{
+  @apply flex items-center justify-center
+}
+
+.main {
+  @apply max-w-[90%] 2xl:max-w-[1280px] mx-auto;
+}
+
+.line{
+  @apply relative before:absolute before:bottom-0 before:h-[1px] before:w-1/2 before:bg-line before:left-1/2 before:-translate-x-1/2
+}
+button{
+  @apply disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer;
+}
