@@ -3,3 +3,4 @@ export { default as ProposalCard } from "./ProposalCard";
 export { default as Modal } from "./Modal";
 export { default as Input } from "./Input";
 export { default as TextArea } from "./TextArea";
+export { default as ScrollToTop } from "./ScrollToTop";
