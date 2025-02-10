@@ -69,7 +69,7 @@ const Header = () => {
                 className="center gap-2 font-sora font-medium text-sm text-main w-full bg-white rounded-full px-4 py-2"
               >
                 <span>Follow me on Github</span>
-                <ArrowRight size={18} />
+                <Github size={18} />
               </a>
             </div>
           </div>

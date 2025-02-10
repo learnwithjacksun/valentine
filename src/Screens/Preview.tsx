@@ -31,10 +31,13 @@ const Preview = () => {
       toast.error("Please enter a secret word");
       return;
     }
-    if (secretWord === card?.secret) {
-      setIsSecretWordVerified(true);
+    if (secretWord !== card?.secret) {
+      toast.error("Incorrect secret word");
+      return;
     }
+    setIsSecretWordVerified(true);
   };
+
 
 
   const handleShare = async () => {
@@ -62,6 +65,14 @@ const Preview = () => {
   const isAccepted = card?.status === "accepted";
 
   const handleDelete = () => {
+    if(!secretWord) {
+      toast.error("Please enter your secret word");
+      return;
+    }
+    if(secretWord !== card?.secret) {
+      toast.error("Incorrect secret word");
+      return;
+    }
     toast.promise(deleteCard(card?.$id), {
       loading: "Deleting...",
       success: "Deleted!",
@@ -145,9 +156,17 @@ const Preview = () => {
         {isModalOpen && (
           <Modal title="Delete Card" onClose={toggleModal} isOpen={isModalOpen}>
             <div className="space-y-4">
-              <p className="text-sm text-main">
-                Are you sure you want to delete this card?
-              </p>
+             <div>
+              <Input
+              label="Secret Word"
+              id="secretWord"
+              type="text"
+              placeholder="Enter your secret word"
+              value={secretWord}
+              onChange={(e) => setSecretWord(e.target.value)}
+              />
+              
+             </div>
               <div className="flex justify-end gap-2">
                 <button
                   onClick={toggleModal}
@@ -202,7 +221,7 @@ const Preview = () => {
 
 
               {isSecretWordVerified && (
-                <p className="text-main text-sm bg-[#f9f9f9] p-2 rounded-lg">
+                <p className="text-main text-xs bg-[#f9f9f9] p-2 rounded-lg">
                   Shareable Link: <span className="font-medium">{window.location.origin}/card/{card?.slug}</span>
                 </p>
               )}
